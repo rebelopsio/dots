@@ -1,0 +1,28 @@
+#[user]
+[user]
+	name = Steve Morgan
+	email = steve@rebelops.io
+  signKey = DB98AD4B
+  signingKey = 920F7DB40A3BA3EF9B35485DE5E86C5D78D24259
+
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[commit]
+  gpgsign = false
+[gpg]
+  program = /opt/homebrew/bin/gpg
+  #format = x509
+[tag]
+  #gpgsign = true
+[gpg "x509"]
+  program = gitsign
+[pull]
+	rebase = true
