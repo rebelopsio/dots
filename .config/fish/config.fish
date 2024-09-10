@@ -77,6 +77,7 @@ if status is-interactive
     alias la="ls -a"
     alias lla="ls -la"
     alias lt="ls --tree"
+    alias cat="bat"
     zellij_tab_name_update
     set -gx PATH $PATH $HOME/.krew/bin
 end
