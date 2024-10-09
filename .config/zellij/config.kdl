@@ -308,7 +308,7 @@ copy_command "pbcopy"                     // osx
 
 // The folder in which Zellij will look for layouts
 //
-layout_dir "/Users/smorgan/.config/zellij/layouts"
+layout_dir "/Users/stephenmorgan/.config/zellij/layouts"
 
 // The folder in which Zellij will look for themes
 //

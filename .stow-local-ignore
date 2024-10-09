@@ -1,0 +1,5 @@
+README.md
+.git
+.gitignore
+.config/tmux/.tmux.conf.local
+.config/tmux/.tmux.conf.bak

@@ -6,12 +6,12 @@
 # end
 
 if status is-interactive
-    #    and not set -q TMUX
-    #    tmux attach -t default || tmux new -s default
-    if set -q ZELLIJ
-    else
-        zellij
-    end
+    and not set -q TMUX
+    tmux attach -t default || tmux new -s default
+    # if set -q ZELLIJ
+    # else
+    #     zellij
+    # end
 end
 
 function zellij_tab_name_update -d "Set Zellij tab name"
@@ -63,7 +63,6 @@ end
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    cwgoctl completion fish | source
     starship init fish | source
     zoxide init fish --cmd cd | source
     alias sf="cd ~/source"
@@ -72,12 +71,22 @@ if status is-interactive
     alias kc="kubectl"
     set -Ux EDITOR nvim
     set -Ux GOPRIVATE github.com/CoverWhale
+    set -Ux TERM xterm-256color
     alias ls="lsd"
-    alias ll="ls -l"
+    alias ll="ls -lah"
     alias la="ls -a"
     alias lla="ls -la"
     alias lt="ls --tree"
     alias cat="bat"
+    alias cq="cloudquery"
+    alias tf="terraform"
+    set KICS_QUERIES_PATH /opt/homebrew/opt/kics/share/kics/assets/queries
     zellij_tab_name_update
     set -gx PATH $PATH $HOME/.krew/bin
 end
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/stephenmorgan/Downloads/google-cloud-sdk/path.fish.inc' ]
+    . '/Users/stephenmorgan/Downloads/google-cloud-sdk/path.fish.inc'
+end
+source $HOME/.tenv.completion.fish

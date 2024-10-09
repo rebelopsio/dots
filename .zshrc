@@ -175,3 +175,5 @@ fi
 if ! ls ~/.cargo/bin | grep 'cargo-upgrade' &> /dev/null; then
   cargo install cargo-edit
 fi
+
+complete -o nospace -C /opt/homebrew/bin/terramate terramate

@@ -1,0 +1,20 @@
+import = ["/home/smorgan/.config/alacritty/catppuccin-mocha.yml"]
+
+[font]
+size = 16.0
+
+[font.normal]
+family = "CaskaydiaCove Nerd Font Mono"
+
+[[keyboard.bindings]]
+chars = "\u0002T"
+key = "J"
+mods = "Command"
+
+[selection]
+save_to_clipboard = true
+
+[window]
+decorations = "none"
+opacity = 0.8
+startup_mode = "Maximized"
