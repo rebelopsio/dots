@@ -14,6 +14,18 @@ if status is-interactive
     # end
 end
 
+# Add Nix profile path
+set -gx PATH $HOME/.nix-profile/bin $PATH
+
+# Add Home Manager's path
+set -gx PATH $HOME/.nix-profile/bin/home-manager $PATH
+
+# If you have a system-level profile
+if test -e /etc/profiles/per-user/$USER/bin
+    set -gx PATH /etc/profiles/per-user/$USER/bin $PATH
+end
+
+
 function zellij_tab_name_update -d "Set Zellij tab name"
     if set -q ZELLIJ
         set tab_name ''
@@ -82,6 +94,7 @@ if status is-interactive
     alias tf="terraform"
     set KICS_QUERIES_PATH /opt/homebrew/opt/kics/share/kics/assets/queries
     zellij_tab_name_update
+    alias cat="bat"
     set -gx PATH $PATH $HOME/.krew/bin
 end
 

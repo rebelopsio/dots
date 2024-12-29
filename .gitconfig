@@ -5,8 +5,8 @@
   signKey = DB98AD4B
   signingKey = 920F7DB40A3BA3EF9B35485DE5E86C5D78D24259
 
-[url "ssh://git@github.com/"]
-	insteadOf = https://github.com/
+#[url "ssh://git@github.com/"]
+#	insteadOf = https://github.com/
 
 [init]
 	defaultBranch = main
