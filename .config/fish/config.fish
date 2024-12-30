@@ -96,6 +96,7 @@ if status is-interactive
     zellij_tab_name_update
     alias cat="bat"
     set -gx PATH $PATH $HOME/.krew/bin
+    set -gx DOCKER_HOST "tcp://192.168.1.65:2375"
 end
 
 # The next line updates PATH for the Google Cloud SDK.

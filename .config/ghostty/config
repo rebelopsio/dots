@@ -1,0 +1,9 @@
+font-family = "CaskaydiaCove Nerd Font Mono"
+font-size = 16
+theme = "catppuccin-mocha"
+macos-titlebar-style = "hidden"
+shell-integration = "fish"
+clipboard-read = "allow"
+clipboard-write = "allow"
+background-opacity = 0.8
+background-blur-radius = 20
