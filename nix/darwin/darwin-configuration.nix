@@ -83,6 +83,7 @@
             "the-unarchiver"
             "caffeine"
             "ghostty"
+            "raycast"
           ];
           masApps = {
             "iBar" = 6737150304;

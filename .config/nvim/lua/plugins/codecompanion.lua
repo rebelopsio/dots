@@ -4,6 +4,22 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
+      {
+        "saghen/blink.cmp",
+        lazy = false,
+        version = "*",
+        opts = {
+          keymap = {
+            preset = "enter",
+            ["<S-Tab>"] = { "select_prev", "fallback" },
+            ["<Tab>"] = { "select_next", "fallback" },
+          },
+          sources = {
+            default = { "lsp", "path", "buffer", "codecompanion" },
+            cmdline = {}, -- Disable sources for command-line mode
+          },
+        },
+      },
     },
     config = function()
       require("codecompanion").setup({
