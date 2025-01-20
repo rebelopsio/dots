@@ -7,24 +7,20 @@
 
 if status is-interactive
     and not set -q TMUX
+    and begin
+        not set -q TERMINAL_EMULATOR
+        or test "$TERMINAL_EMULATOR" != "JetBrains-JediTerm"
+    end
     tmux attach -t default || tmux new -s default
-    # if set -q ZELLIJ
-    # else
-    #     zellij
-    # end
 end
-
-# Add Nix profile path
+# Path configurations
 set -gx PATH $HOME/.nix-profile/bin $PATH
-
-# Add Home Manager's path
-set -gx PATH $HOME/.nix-profile/bin/home-manager $PATH
-
+set -gx PATH $HOME/.krew/bin $PATH
+set -gx PATH $HOME/.local/bin $PATH
 # If you have a system-level profile
 if test -e /etc/profiles/per-user/$USER/bin
     set -gx PATH /etc/profiles/per-user/$USER/bin $PATH
 end
-
 
 function zellij_tab_name_update -d "Set Zellij tab name"
     if set -q ZELLIJ
@@ -45,17 +41,15 @@ function zellij_tab_name_update -d "Set Zellij tab name"
 end
 
 
-function crepo -d "Create a directory, initialize git,"
+function crepo -d "Create a directory and initialize git"
+    if test (count $argv) -eq 0
+        echo "Usage: crepo <directory_name>"
+        return 1
+    end
     command mkdir $argv
     if test $status = 0
-        switch $argv[(count $argv)]
-            case '-*'
-
-            case '*'
-                cd $argv[(count $argv)]
-                git init
-                return
-        end
+        cd $argv[(count $argv)]
+        git init
     end
 end
 
@@ -77,13 +71,18 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
     starship init fish | source
     zoxide init fish --cmd cd | source
+    # Environment variables block
+    set -Ux EDITOR nvim
+    set -Ux GOPRIVATE github.com/CoverWhale
+    set -Ux TERM xterm-256color
+    set -gx PATH $PATH $HOME/.krew/bin
+    set -gx DOCKER_HOST "tcp://192.168.1.65:2375"
+
+    # Aliases block
     alias sf="cd ~/source"
     alias cls="clear"
     alias vim="nvim"
     alias kc="kubectl"
-    set -Ux EDITOR nvim
-    set -Ux GOPRIVATE github.com/CoverWhale
-    set -Ux TERM xterm-256color
     alias ls="lsd"
     alias ll="ls -lah"
     alias la="ls -a"
@@ -92,11 +91,10 @@ if status is-interactive
     alias cat="bat"
     alias cq="cloudquery"
     alias tf="terraform"
+
     set KICS_QUERIES_PATH /opt/homebrew/opt/kics/share/kics/assets/queries
     zellij_tab_name_update
-    alias cat="bat"
-    set -gx PATH $PATH $HOME/.krew/bin
-    set -gx DOCKER_HOST "tcp://192.168.1.65:2375"
+    set -g fish_greeting
 end
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -104,3 +102,8 @@ if [ -f '/Users/stephenmorgan/Downloads/google-cloud-sdk/path.fish.inc' ]
     . '/Users/stephenmorgan/Downloads/google-cloud-sdk/path.fish.inc'
 end
 source $HOME/.tenv.completion.fish
+
+function reload
+    source ~/.config/fish/config.fish
+end
+
