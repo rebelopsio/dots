@@ -1,0 +1,129 @@
+" Enable Which-Key
+set which-key
+set notimeout
+
+" Enable IdeaVim plugins
+set sneak
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set textobj-entire
+set ReplaceWithRegister
+set exchange
+
+" Basic Settings
+set showmode
+set relativenumber
+set number
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set scrolloff=8
+set history=1000
+set clipboard+=unnamed
+
+" LazyVim-style key mappings
+let mapleader=" "
+
+" Buffer Navigation
+map <leader>] :action NextTab<CR>
+map <leader>[ :action PreviousTab<CR>
+map <leader>bd :action CloseEditor<CR>
+map <leader>bD :action CloseAllEditorsButActive<CR>
+
+" Window Management
+map <leader>ww <C-W>w
+map <leader>wd <C-W>c
+map <leader>wh <C-W>h
+map <leader>wj <C-W>j
+map <leader>wk <C-W>k
+map <leader>wl <C-W>l
+map <leader>ws <C-W>s
+map <leader>wv <C-W>v
+
+" File Operations
+map <leader>ff :action GotoFile<CR>
+map <leader>fr :action RecentFiles<CR>
+map <leader>fs :action SaveAll<CR>
+
+" Code Navigation
+map <leader>ca :action ShowIntentionActions<CR>
+map <leader>cr :action RenameElement<CR>
+map <leader>cf :action ReformatCode<CR>
+map <leader>cd :action GotoDeclaration<CR>
+map <leader>ci :action GotoImplementation<CR>
+map <leader>cu :action FindUsages<CR>
+map <leader>ch :action CallHierarchy<CR>
+
+" Search
+map <leader>ss :action Find<CR>
+map <leader>sp :action FindInPath<CR>
+map <leader>sr :action Replace<CR>
+map <leader>sR :action ReplaceInPath<CR>
+
+" Git
+map <leader>gg :action Vcs.QuickListPopupAction<CR>
+map <leader>gd :action Compare.LastVersion<CR>
+map <leader>gb :action Git.Branches<CR>
+map <leader>gl :action Vcs.Show.Log<CR>
+map <leader>gp :action Vcs.Push<CR>
+
+" LSP-like functionality
+map <leader>lr :action RenameElement<CR>
+map <leader>la :action ShowIntentionActions<CR>
+map <leader>ld :action GotoDeclaration<CR>
+map <leader>lf :action ReformatCode<CR>
+map <leader>li :action GotoImplementation<CR>
+map <leader>lt :action GotoTest<CR>
+
+" Debug
+map <leader>db :action ToggleLineBreakpoint<CR>
+map <leader>dc :action Resume<CR>
+map <leader>dd :action Debug<CR>
+map <leader>dn :action StepOver<CR>
+map <leader>di :action StepInto<CR>
+map <leader>do :action StepOut<CR>
+
+" Terminal
+map <leader>tt :action ActivateTerminalToolWindow<CR>
+
+" Which-Key configuration
+let g:WhichKeyDesc_buffer = "<leader>b Buffer operations"
+let g:WhichKeyDesc_window = "<leader>w Window operations"
+let g:WhichKeyDesc_file = "<leader>f File operations"
+let g:WhichKeyDesc_search = "<leader>s Search operations"
+let g:WhichKeyDesc_git = "<leader>g Git operations"
+let g:WhichKeyDesc_lsp = "<leader>l LSP operations"
+let g:WhichKeyDesc_code = "<leader>c Code operations"
+let g:WhichKeyDesc_debug = "<leader>d Debug operations"
+let g:WhichKeyDesc_terminal = "<leader>t Terminal operations"
+
+" Additional IDE specific features
+map <leader>ru :action RunClass<CR>
+map <leader>rd :action DebugClass<CR>
+map <leader>rb :action BuildProject<CR>
+
+" Exit insert mode with jk
+inoremap jk <Esc>
+
+" Center search results
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
+
+" Keep cursor centered when scrolling
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+" Maintain visual selection when indenting
+vnoremap > >gv
+vnoremap < <gv
+
+" Move selected lines up and down
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
