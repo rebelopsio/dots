@@ -9,7 +9,7 @@ if status is-interactive
     and not set -q TMUX
     and begin
         not set -q TERMINAL_EMULATOR
-        or test "$TERMINAL_EMULATOR" != "JetBrains-JediTerm"
+        or test "$TERMINAL_EMULATOR" != JetBrains-JediTerm
     end
     tmux attach -t default || tmux new -s default
 end
@@ -71,12 +71,14 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
     starship init fish | source
     zoxide init fish --cmd cd | source
+
     # Environment variables block
     set -Ux EDITOR nvim
     set -Ux GOPRIVATE github.com/CoverWhale
     set -Ux TERM xterm-256color
     set -gx PATH $PATH $HOME/.krew/bin
     set -gx DOCKER_HOST "tcp://192.168.1.65:2375"
+    set -gx XDG_CONFIG_HOME "/Users/$USER/.config"
 
     # Aliases block
     alias sf="cd ~/source"
@@ -106,4 +108,3 @@ source $HOME/.tenv.completion.fish
 function reload
     source ~/.config/fish/config.fish
 end
-

@@ -88,6 +88,7 @@ map <leader>do :action StepOut<CR>
 
 " Terminal
 map <leader>tt :action ActivateTerminalToolWindow<CR>
+map <C-S-_> :action ActivateTerminalToolWindow<CR>
 
 " Which-Key configuration
 let g:WhichKeyDesc_buffer = "<leader>b Buffer operations"
