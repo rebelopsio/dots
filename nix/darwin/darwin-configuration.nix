@@ -73,12 +73,14 @@
             "dagger"
             "pulumi"
             "go"
-            "docker"
             "pkg-config"
             "openssl@3"
             "bash-completion@2"
             "mcfly"
             "pyenv"
+            "orbstack"
+            "bash"
+            "bash-preexec"
           ];
           casks = [
             "firefox@developer-edition"

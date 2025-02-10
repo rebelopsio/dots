@@ -5,7 +5,7 @@ case $- in
 esac
 
 # TMUX auto-start (migrated from fish)
-if command -v tmux &>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [ -z "$NVIM" ]; then
+if command -v tmux &>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
 	if [[ -z "$TERMINAL_EMULATOR" || "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
 		tmux attach -t default || tmux new -s default
 	fi
@@ -25,24 +25,59 @@ export PATH="$HOME/.nix-profile/bin:$PATH"
 export PATH="$HOME/.krew/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
 
 # Environment variables (migrated from fish)
 export EDITOR="nvim"
 export GOPRIVATE="github.com/CoverWhale"
 export TERM="xterm-256color"
-export DOCKER_HOST="tcp://192.168.1.65:2375"
+# export DOCKER_HOST="tcp://192.168.1.65:2375"
 export XDG_CONFIG_HOME="/Users/$USER/.config"
 export KICS_QUERIES_PATH="/opt/homebrew/opt/kics/share/kics/assets/queries"
 
-# History configuration
-HISTCONTROL=ignoreboth
-HISTSIZE=1000
-HISTFILESIZE=2000
-shopt -s histappend
+# Bash completion configuration
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
+# Enable extended pattern matching
+shopt -s extglob
+# Extended globbing
+shopt -s globstar
+# Case-insensitive globbing
+shopt -s nocaseglob
+# Append rather than overwrite history
+shopt -s histappend
+# Save multi-line commands as one line
+shopt -s cmdhist
+# Do not complete empty command line
+shopt -s no_empty_cmd_completion
 # Check window size after each command
 shopt -s checkwinsize
+
+# Command history configuration
+HISTCONTROL=ignoreboth:erasedups
+HISTSIZE=10000
+HISTFILESIZE=20000
+HISTIGNORE="ls:ll:cd:pwd:exit:date:* --help:* -h"
+
+# Better directory navigation
+CDPATH=".:~:~/source"
+
+# Better completion
+bind 'set show-all-if-ambiguous on'
+bind 'set completion-ignore-case on'
+bind 'set colored-stats on'
+bind 'set visible-stats on'
+bind 'set mark-symlinked-directories on'
+bind 'set colored-completion-prefix on'
+bind 'set menu-complete-display-prefix on'
+bind 'TAB:menu-complete'
+bind '"\e[Z": menu-complete-backward'
+
+# FZF configuration
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --info=inline"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 
 # Enable programmable completion features
 if ! shopt -oq posix; then
@@ -58,9 +93,6 @@ eval "$(starship init bash)"
 
 # Initialize zoxide (z command)
 eval "$(zoxide init bash)"
-
-# Enable fzf keybindings and completion
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Aliases (migrated from fish)
 alias sf="cd ~/source"
@@ -121,11 +153,6 @@ reload() {
 # Google Cloud SDK
 if [ -f '/Users/stephenmorgan/Downloads/google-cloud-sdk/path.bash.inc' ]; then
 	source '/Users/stephenmorgan/Downloads/google-cloud-sdk/path.bash.inc'
-fi
-
-# Set up bash autocompletion
-if [ -f /opt/homebrew/etc/profile.d/bash_completion.sh ]; then
-	source /opt/homebrew/etc/profile.d/bash_completion.sh
 fi
 
 # Remove default greeting
