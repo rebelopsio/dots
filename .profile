@@ -1,4 +1,8 @@
+# Keep just the basic PATH and env setup
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-. "$HOME/.cargo/env"
+
+# Cargo setup
+if [ -f "$HOME/.cargo/env" ]; then
+	. "$HOME/.cargo/env"
+fi

@@ -160,3 +160,9 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # mcfly initialization
 eval "$(mcfly init bash)"
+
+# Pyenv initialization
+if command -v pyenv >/dev/null; then
+	eval "$(pyenv init -)"
+	#eval "$(pyenv virtualenv-init -)"
+fi
