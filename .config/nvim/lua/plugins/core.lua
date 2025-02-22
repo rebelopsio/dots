@@ -1,34 +1,40 @@
 return {
   {
     "catppuccin/nvim",
-    integrations = {
-      alpha = true,
-      cmp = true,
-      gitsigns = true,
-      illuminate = true,
-      indent_blankline = { enabled = true },
-      lsp_trouble = true,
-      mason = true,
-      mini = true,
-      native_lsp = {
-        enabled = true,
-        underlines = {
-          errors = { "undercurl" },
-          hints = { "undercurl" },
-          warnings = { "undercurl" },
-          information = { "undercurl" },
+    config = function()
+      require("catppuccin").setup({
+        flavour = "mocha", -- latte, frappe, macchiato, mocha
+        transparent_background = true, -- disables setting the background color.
+        integrations = {
+          alpha = true,
+          cmp = true,
+          gitsigns = true,
+          illuminate = true,
+          indent_blankline = { enabled = true },
+          lsp_trouble = true,
+          mason = true,
+          mini = true,
+          native_lsp = {
+            enabled = true,
+            underlines = {
+              errors = { "undercurl" },
+              hints = { "undercurl" },
+              warnings = { "undercurl" },
+              information = { "undercurl" },
+            },
+          },
+          navic = { enabled = true, custom_bg = "lualine" },
+          neotest = true,
+          noice = true,
+          notify = true,
+          neotree = true,
+          semantic_tokens = true,
+          telescope = true,
+          treesitter = true,
+          which_key = true,
         },
-      },
-      navic = { enabled = true, custom_bg = "lualine" },
-      neotest = true,
-      noice = true,
-      notify = true,
-      neotree = true,
-      semantic_tokens = true,
-      telescope = true,
-      treesitter = true,
-      which_key = true,
-    },
+      })
+    end,
   },
   {
     "LazyVim/LazyVim",

@@ -66,8 +66,10 @@
             "cloudquery/tap"
             "dagger/tap"
             "turbot/tap"
+            "fluxcd/tap"
           ];
           brews = [
+            "kind"
             "mas"
             "cloudquery"
             "dagger"
