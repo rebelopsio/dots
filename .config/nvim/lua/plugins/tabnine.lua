@@ -12,35 +12,15 @@ return {
         suggestion_color = { gui = "#808080", cterm = 244 },
         exclude_filetypes = { "TelescopePrompt", "NvimTree" },
         log_file_path = nil,
-
-        hub = {
-          host = "https://api.tabnine.com",
-          certificate_path = nil,
-        },
-
-        capabilities = {
-          suggestion = true,
-          completion = true,
-          semantic = true,
-          learning = true,
-        },
+        max_num_results = 10,
+        sort_results = true,
+        run_in_background = true,
       })
 
-      -- Set up completion after TabNine is initialized
-      local ok, cmp = pcall(require, "cmp")
-      if ok then
-        local sources = cmp.get_config().sources or {}
-        table.insert(sources, { name = "tabnine", group_index = 2, priority = 750 })
-
-        cmp.setup({
-          sources = sources,
-        })
-      end
-
       -- Optional: Add custom keymaps
-      vim.keymap.set("n", "<leader>te", ":TabnineEnable<CR>", { desc = "Enable Tabnine" })
-      vim.keymap.set("n", "<leader>td", ":TabnineDisable<CR>", { desc = "Disable Tabnine" })
-      vim.keymap.set("n", "<leader>ts", ":TabnineStatus<CR>", { desc = "Tabnine Status" })
+      --vim.keymap.set("n", "<leader>te", ":TabnineEnable<CR>", { desc = "Enable Tabnine" })
+      --vim.keymap.set("n", "<leader>td", ":TabnineDisable<CR>", { desc = "Disable Tabnine" })
+      --vim.keymap.set("n", "<leader>ts", ":TabnineStatus<CR>", { desc = "Tabnine Status" })
     end,
   },
 }

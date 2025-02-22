@@ -78,9 +78,10 @@
             "bash-completion@2"
             "mcfly"
             "pyenv"
-            "orbstack"
             "bash"
             "bash-preexec"
+            "uv"
+            "operator-sdk"
           ];
           casks = [
             "firefox@developer-edition"
@@ -89,6 +90,7 @@
             "caffeine"
             "ghostty"
             "raycast"
+            "orbstack"
           ];
           masApps = {
             "iBar" = 6737150304;
