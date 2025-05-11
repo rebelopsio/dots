@@ -117,32 +117,39 @@ crepo() {
 	mkdir "$1" && cd "$1" && git init
 }
 
-# AWS Profile function (migrated from fish)
+# AWS Profile function with authentication check
 awsp() {
-	if [ $# -lt 1 ] || [ $# -gt 2 ]; then
-		echo "Usage: awsp <profile-name> [region]"
-		return 1
-	fi
+    if [ $# -lt 1 ] || [ $# -gt 2 ]; then
+        echo "Usage: awsp <profile-name> [region]"
+        return 1
+    fi
 
-	# Run yawsso first
-	yawsso login --profile "$1"
-	if [ $? -ne 0 ]; then
-		echo "yawsso failed to run"
-		return 1
-	fi
+    # Set AWS_PROFILE first so the identity check uses this profile
+    export AWS_PROFILE="$1"
+    
+    # Try to get caller identity to check if we're already authenticated
+    echo "Checking current authentication status..."
+    if ! aws sts get-caller-identity &>/dev/null; then
+        echo "Not authenticated or session expired. Running yawsso..."
+        # Run yawsso to log in
+        yawsso login --profile "$1"
+        if [ $? -ne 0 ]; then
+            echo "yawsso failed to run"
+            return 1
+        fi
+    else
+        echo "Already authenticated with profile $1"
+    fi
 
-	# Set AWS_PROFILE
-	export AWS_PROFILE="$1"
+    # Set AWS_REGION with proper argument checking
+    if [ $# -eq 2 ]; then
+        export AWS_REGION="$2"
+    else
+        export AWS_REGION="us-east-1"
+    fi
 
-	# Set AWS_REGION with proper argument checking
-	if [ $# -eq 2 ]; then
-		export AWS_REGION="$2"
-	else
-		export AWS_REGION="us-east-1"
-	fi
-
-	echo "AWS Profile set to: $AWS_PROFILE"
-	echo "AWS Region set to: $AWS_REGION"
+    echo "AWS Profile set to: $AWS_PROFILE"
+    echo "AWS Region set to: $AWS_REGION"
 }
 
 # Reload function
