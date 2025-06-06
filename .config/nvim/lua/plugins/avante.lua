@@ -79,6 +79,18 @@ return {
       model = "claude-3-5-sonnet-20241022",
       temperature = 0,
       max_tokens = 4096,
+      -- Get API key from 1Password CLI
+      api_key = function()
+        local handle = io.popen("op read 'op://Private/Anthropic API Key/password'")
+        if handle then
+          local result = handle:read("*a")
+          handle:close()
+          -- Remove any trailing whitespace/newlines
+          return result:gsub("%s+$", "")
+        end
+        vim.notify("Failed to get Claude API key from 1Password", vim.log.levels.ERROR)
+        return nil
+      end,
     },
 
     -- Mode configuration
