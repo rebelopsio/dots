@@ -2,6 +2,7 @@
 
 {
       nixpkgs.config.allowUnfree = true;
+      nixpkgs.config.allowUnsupportedSystem = true;
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages = with pkgs;
@@ -10,7 +11,7 @@
             mkalias
             alacritty
             flameshot
-            _1password
+            _1password-cli
             skhd
             terramate
             tenv
@@ -48,7 +49,7 @@
             nushell
             stow
             carapace
-            pre-commit
+            # pre-commit # Removed due to Julia build failure - install via pipx instead
             pipx
             awscli2
             tree
@@ -57,8 +58,8 @@
         ];
       fonts.packages = 
         [
-            pkgs.nerdfonts
-        ];
+            # Include all nerd fonts
+        ] ++ builtins.filter pkgs.lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
       homebrew = {
           enable = true;
@@ -118,7 +119,7 @@
         rm -rf /Applications/Nix\ Apps
         mkdir -p /Applications/Nix\ Apps
         find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-        while read src; do
+        while IFS= read -r src; do
           app_name=$(basename "$src")
           echo "copying $src" >&2
           ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
@@ -134,7 +135,6 @@
         };
 
       # Auto upgrade nix package and the daemon service.
-      services.nix-daemon.enable = true;
       # nix.package = pkgs.nix;
 
       # Necessary for using flakes on this system.
@@ -151,6 +151,7 @@
       # Used for backwards compatibility, please read the changelog before changing.
       # $ darwin-rebuild changelog
       system.stateVersion = 5;
+      system.primaryUser = "smorgan";
 
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
