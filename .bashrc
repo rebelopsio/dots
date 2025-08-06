@@ -6,7 +6,7 @@ esac
 
 # TMUX auto-start (migrated from fish)
 if command -v tmux &>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-	if [[ -z "$TERMINAL_EMULATOR" || "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
+	if [[ -z "$TERMINAL_EMULATOR" || "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] && [[ "$START_TMUX" != "false" ]]; then
 		tmux attach -t default || tmux new -s default
 	fi
 fi
@@ -25,6 +25,7 @@ export PATH="$HOME/.nix-profile/bin:$PATH"
 export PATH="$HOME/.krew/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 
 # Environment variables (migrated from fish)
 export EDITOR="nvim"
@@ -119,37 +120,37 @@ crepo() {
 
 # AWS Profile function with authentication check
 awsp() {
-    if [ $# -lt 1 ] || [ $# -gt 2 ]; then
-        echo "Usage: awsp <profile-name> [region]"
-        return 1
-    fi
+	if [ $# -lt 1 ] || [ $# -gt 2 ]; then
+		echo "Usage: awsp <profile-name> [region]"
+		return 1
+	fi
 
-    # Set AWS_PROFILE first so the identity check uses this profile
-    export AWS_PROFILE="$1"
-    
-    # Try to get caller identity to check if we're already authenticated
-    echo "Checking current authentication status..."
-    if ! aws sts get-caller-identity &>/dev/null; then
-        echo "Not authenticated or session expired. Running yawsso..."
-        # Run yawsso to log in
-        yawsso login --profile "$1"
-        if [ $? -ne 0 ]; then
-            echo "yawsso failed to run"
-            return 1
-        fi
-    else
-        echo "Already authenticated with profile $1"
-    fi
+	# Set AWS_PROFILE first so the identity check uses this profile
+	export AWS_PROFILE="$1"
 
-    # Set AWS_REGION with proper argument checking
-    if [ $# -eq 2 ]; then
-        export AWS_REGION="$2"
-    else
-        export AWS_REGION="us-east-1"
-    fi
+	# Try to get caller identity to check if we're already authenticated
+	echo "Checking current authentication status..."
+	if ! aws sts get-caller-identity &>/dev/null; then
+		echo "Not authenticated or session expired. Running yawsso..."
+		# Run yawsso to log in
+		yawsso login --profile "$1"
+		if [ $? -ne 0 ]; then
+			echo "yawsso failed to run"
+			return 1
+		fi
+	else
+		echo "Already authenticated with profile $1"
+	fi
 
-    echo "AWS Profile set to: $AWS_PROFILE"
-    echo "AWS Region set to: $AWS_REGION"
+	# Set AWS_REGION with proper argument checking
+	if [ $# -eq 2 ]; then
+		export AWS_REGION="$2"
+	else
+		export AWS_REGION="us-east-1"
+	fi
+
+	echo "AWS Profile set to: $AWS_PROFILE"
+	echo "AWS Region set to: $AWS_REGION"
 }
 
 # Reload function
@@ -175,5 +176,5 @@ if command -v pyenv >/dev/null; then
 fi
 
 export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
